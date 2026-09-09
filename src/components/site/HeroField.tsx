@@ -49,6 +49,26 @@ export function HeroField() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_40rem_at_50%_120%,transparent,var(--color-background))]"
       />
+      {/* Depth rings: three faint planes offset by pointer tilt. Hidden on
+          small screens, where the composition stays flat and light. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden items-center justify-center sm:flex"
+      >
+        {[0, 1, 2].map((ring) => (
+          <div
+            key={ring}
+            className="absolute rounded-full border border-border/40"
+            style={{
+              width: `${26 + ring * 16}rem`,
+              height: `${26 + ring * 16}rem`,
+              opacity: 0.5 - ring * 0.14,
+              transform: `translate3d(${tilt.x * (10 + ring * 8)}px, ${tilt.y * (8 + ring * 6)}px, 0)`,
+              transition: "transform 1400ms cubic-bezier(0.16,1,0.3,1)",
+            }}
+          />
+        ))}
+      </div>
 
       <div
         ref={sceneRef}
