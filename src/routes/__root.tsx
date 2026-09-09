@@ -11,22 +11,35 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Navigation } from "@/components/site/Navigation";
+import { Footer } from "@/components/site/Footer";
+import { Analytics } from "@/components/site/Analytics";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-dvh items-center justify-center px-6">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+        <p className="micro text-muted-foreground">404</p>
+        <h1 className="display mt-6 text-4xl text-balance sm:text-5xl">
+          This page has stepped out.
+        </h1>
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+          The page you're looking for doesn't exist or has moved. Everything we do is a short walk
+          away.
         </p>
-        <div className="mt-6">
+        <div className="mt-10 flex flex-wrap justify-center gap-4 text-sm">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex min-h-11 items-center rounded-full border border-border px-6 transition-colors hover:border-primary hover:bg-primary/10"
           >
             Go home
+          </Link>
+          <Link
+            to="/conversation"
+            className="inline-flex min-h-11 items-center rounded-full border border-transparent px-6 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Start a conversation
           </Link>
         </div>
       </div>
