@@ -51,7 +51,7 @@ export function Navigation() {
         style={{ transform: `scaleX(${progress})` }}
       />
 
-      <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between px-5 py-5 sm:px-10 sm:py-7">
+      <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between bg-gradient-to-b from-background via-background/85 to-transparent px-5 py-5 sm:px-10 sm:py-7">
         <Link
           to="/"
           className="flex items-center gap-3 rounded-sm"
