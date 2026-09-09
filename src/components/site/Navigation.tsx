@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import markAsset from "@/assets/logo-mark.png.asset.json";
 import { cn } from "@/lib/utils";
 import { EMAIL } from "@/lib/site";
+import { ThemeToggle } from "./ThemeToggle";
+
 
 type NavLink = {
   to: "/" | "/conversation" | "/privacy" | "/terms";
@@ -67,29 +69,33 @@ export function Navigation() {
           <span className="micro hidden text-muted-foreground sm:inline">Uthandolwamandla</span>
         </Link>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="site-index"
-          className="micro flex min-h-11 items-center gap-3 rounded-sm px-2 text-muted-foreground transition-colors hover:text-foreground"
-        >
-          {open ? "Close" : "Index"}
-          <span aria-hidden="true" className="flex flex-col gap-1">
-            <span
-              className={cn(
-                "block h-px w-6 bg-current transition-transform duration-500",
-                open && "translate-y-[3px] rotate-45",
-              )}
-            />
-            <span
-              className={cn(
-                "block h-px w-6 bg-current transition-transform duration-500",
-                open && "-translate-y-[3px] -rotate-45",
-              )}
-            />
-          </span>
-        </button>
+        <div className="flex items-center gap-1 sm:gap-3">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="site-index"
+            className="micro flex min-h-11 items-center gap-3 rounded-sm px-2 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {open ? "Close" : "Index"}
+            <span aria-hidden="true" className="flex flex-col gap-1">
+              <span
+                className={cn(
+                  "block h-px w-6 bg-current transition-transform duration-500",
+                  open && "translate-y-[3px] rotate-45",
+                )}
+              />
+              <span
+                className={cn(
+                  "block h-px w-6 bg-current transition-transform duration-500",
+                  open && "-translate-y-[3px] -rotate-45",
+                )}
+              />
+            </span>
+          </button>
+        </div>
+
       </header>
 
       <div
