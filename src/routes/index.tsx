@@ -1,24 +1,87 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { HeroField } from "@/components/site/HeroField";
+import { PracticeIndex } from "@/components/site/PracticeIndex";
+import { FounderPassage } from "@/components/site/FounderPassage";
+import { Reveal } from "@/components/site/Reveal";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const TITLE = "Uthandolwamandla — HR, IR and CCMA specialists in Benoni";
+const DESCRIPTION =
+  "Recruitment, HR functions, IR/ER and CCMA representation with a 99% success rate, payroll, training and health & safety for South African employers. Based in Daveyton, Benoni.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+      { name: "twitter:title", content: TITLE },
+      { name: "twitter:description", content: DESCRIPTION },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          name: "Uthandolwamandla Managing and Distribution (Pty) Ltd",
+          description: DESCRIPTION,
+          founder: { "@type": "Person", name: "Zanele Mabuza" },
+          email: "admin@uthandolwamandlasa.co.za",
+          telephone: "+27738583423",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "4131 Mpinga Street",
+            addressLocality: "Daveyton, Benoni",
+            addressCountry: "ZA",
+          },
+          areaServed: "South Africa",
+        }),
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <HeroField />
+      <PracticeIndex />
+      <FounderPassage />
+
+      <section className="px-6 py-32 sm:px-12 sm:py-48">
+        <div className="mx-auto max-w-3xl text-center">
+          <Reveal>
+            <h2 className="display text-3xl text-balance sm:text-5xl">
+              Some conversations shouldn't start with a form on a busy page.
+            </h2>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="mx-auto mt-8 max-w-md text-sm leading-relaxed text-muted-foreground">
+              Tell us what's happening — a dispute, a hire, a payroll you've outgrown — and we'll
+              take it from there, in confidence.
+            </p>
+          </Reveal>
+          <Reveal delay={340}>
+            <Link
+              to="/conversation"
+              className="group mt-12 inline-flex min-h-11 items-center gap-3 rounded-full border border-border px-7 py-3.5 text-sm transition-colors hover:border-primary hover:bg-primary/10"
+            >
+              Start a confidential conversation
+              <span
+                aria-hidden="true"
+                className="transition-transform duration-500 group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+    </>
   );
 }
