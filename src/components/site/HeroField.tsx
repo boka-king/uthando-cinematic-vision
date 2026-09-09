@@ -15,6 +15,10 @@ export function HeroField() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
 
+    // Pointer parallax is a desktop nicety only: on touch devices it never
+    // fires and the listener would just cost battery, so skip it entirely.
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+
     let frame = 0;
     const onMove = (event: PointerEvent) => {
       cancelAnimationFrame(frame);
