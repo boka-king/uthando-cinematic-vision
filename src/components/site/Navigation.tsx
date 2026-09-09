@@ -4,14 +4,20 @@ import markAsset from "@/assets/logo-mark.png.asset.json";
 import { cn } from "@/lib/utils";
 import { EMAIL } from "@/lib/site";
 
-const LINKS = [
+type NavLink = {
+  to: "/" | "/conversation" | "/privacy" | "/terms";
+  label: string;
+  hash?: string;
+};
+
+const LINKS: NavLink[] = [
   { to: "/", label: "Home" },
-  { to: "/#practice", label: "Practice", hash: true },
-  { to: "/#founder", label: "Founder", hash: true },
+  { to: "/", label: "Practice", hash: "practice" },
+  { to: "/", label: "Founder", hash: "founder" },
   { to: "/conversation", label: "Start a conversation" },
   { to: "/privacy", label: "Privacy" },
   { to: "/terms", label: "Terms" },
-] as const;
+];
 
 export function Navigation() {
   const [open, setOpen] = useState(false);
@@ -96,8 +102,8 @@ export function Navigation() {
             {LINKS.map((link, i) => (
               <li key={link.label}>
                 <Link
-                  to={link.hash ? "/" : link.to}
-                  hash={link.hash ? link.to.split("#")[1] : undefined}
+                  to={link.to}
+                  hash={link.hash}
                   onClick={() => setOpen(false)}
                   style={{ transitionDelay: `${120 + i * 70}ms` }}
                   data-shown={open}
