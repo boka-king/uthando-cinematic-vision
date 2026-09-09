@@ -30,7 +30,7 @@ export function HeroField() {
     };
     const onScroll = () => setScrolled(Math.min(1, window.scrollY / (window.innerHeight || 1)));
 
-    window.addEventListener("pointermove", onMove, { passive: true });
+    if (finePointer) window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       cancelAnimationFrame(frame);
