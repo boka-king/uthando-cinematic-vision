@@ -9,3 +9,4 @@
 - [ ] Contact table RLS lint follow-up
 - [ ] Build/typecheck + preview verification
 - [ ] Sitemap (deferred: no public domain yet)
+- [ ] Hero depth refinement + mobile-light fallback
