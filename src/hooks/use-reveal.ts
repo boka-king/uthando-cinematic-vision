@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from "react";
  * Slow reveal on first entry into the viewport. Respects reduced-motion by
  * showing content immediately.
  */
-export function useReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0.2) {
+// Threshold stays at 0: elements taller than the viewport can never reach a
+// higher intersection ratio, which would leave them permanently hidden.
+export function useReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0) {
   const ref = useRef<T | null>(null);
   const [shown, setShown] = useState(false);
 
