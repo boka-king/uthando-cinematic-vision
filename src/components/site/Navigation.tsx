@@ -103,7 +103,7 @@ export function Navigation() {
               <li key={link.label}>
                 <Link
                   to={link.to}
-                  hash={link.hash}
+                  {...(link.hash ? { hash: link.hash } : {})}
                   onClick={() => setOpen(false)}
                   style={{ transitionDelay: `${120 + i * 70}ms` }}
                   data-shown={open}
