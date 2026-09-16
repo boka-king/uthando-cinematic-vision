@@ -44,12 +44,36 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+// Baseline security headers. Framing is intentionally left open so the
+// Lovable preview can embed the site; everything else is locked down.
+const SECURITY_HEADERS: Record<string, string> = {
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "x-dns-prefetch-control": "off",
+  "cross-origin-opener-policy": "same-origin-allow-popups",
+  "permissions-policy":
+    "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+  "strict-transport-security": "max-age=31536000; includeSubDomains",
+};
+
+function withSecurityHeaders(response: Response): Response {
+  const headers = new Headers(response.headers);
+  for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+    if (!headers.has(name)) headers.set(name, value);
+  }
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withSecurityHeaders(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {
