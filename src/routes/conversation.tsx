@@ -64,6 +64,8 @@ function ConversationPage() {
                     </a>
                     <a
                       href={whatsappLink(c.phone, waText)}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex min-h-11 items-center text-primary-glow underline-offset-4 hover:underline"
                     >
                       WhatsApp
