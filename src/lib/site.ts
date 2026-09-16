@@ -4,7 +4,6 @@ export const SITE_SHORT = "Uthandolwamandla";
 export const CONTACTS = [
   { name: "Zanele Mabuza", role: "Managing Member & Founder", phone: "+27738583423" },
   { name: "Thami", role: "Client liaison", phone: "+27837804145" },
-  { name: "Jessica", role: "Client liaison", phone: "+27691668419" },
 ] as const;
 
 export const EMAIL = "admin@uthandolwamandlasa.co.za";
