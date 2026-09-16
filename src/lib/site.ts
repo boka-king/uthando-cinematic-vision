@@ -17,7 +17,8 @@ export function prettyPhone(phone: string) {
 }
 
 export function whatsappLink(phone: string, text: string) {
-  return `https://wa.me/${phone.replace("+", "")}?text=${encodeURIComponent(text)}`;
+  const digits = phone.replace(/\D/g, "");
+  return `https://api.whatsapp.com/send?phone=${digits}&text=${encodeURIComponent(text)}`;
 }
 
 export const SERVICES = [
