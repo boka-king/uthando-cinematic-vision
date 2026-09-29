@@ -13,7 +13,7 @@ export const getAdminStatus = createServerFn({ method: "GET" })
     const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
     if (isAdmin) return { isAdmin: true };
 
-    const email = String((claims as Record<string, unknown>).email ?? "").toLowerCase();
+    const email = String((claims as Record<string, unknown>)["email"] ?? "").toLowerCase();
     const { data: userData } = await supabase.auth.getUser();
     const confirmed = !!userData.user?.email_confirmed_at;
     if (email === OWNER_EMAIL && confirmed) {
@@ -64,7 +64,9 @@ export const updateEnquiry = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
-    const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
+    const patch: { updated_at: string; status?: string; notes?: string } = {
+      updated_at: new Date().toISOString(),
+    };
     if (data.status) patch.status = data.status;
     if (data.notes !== undefined) patch.notes = data.notes;
     const { error } = await context.supabase.from("contact_requests").update(patch).eq("id", data.id);
