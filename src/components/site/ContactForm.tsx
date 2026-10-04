@@ -55,6 +55,7 @@ export function ContactForm() {
           elapsedMs: Date.now() - openedAt.current,
         },
       });
+      setSentValues(values);
       setSent(true);
       reset();
       toast.success("Message received. We'll reply in confidence.");
