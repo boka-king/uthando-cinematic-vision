@@ -5,7 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { toast } from "sonner";
 import { submitContactRequest } from "@/lib/contact.functions";
-import { SERVICES } from "@/lib/site";
+import { CONTACTS, SERVICES, whatsappLink } from "@/lib/site";
 
 const formSchema = z.object({
   name: z.string().trim().min(2, "Please tell us your name.").max(80, "Under 80 characters."),
@@ -31,6 +31,7 @@ const fieldClass =
 export function ContactForm() {
   const send = useServerFn(submitContactRequest);
   const [sent, setSent] = useState(false);
+  const [sentValues, setSentValues] = useState<FormValues | null>(null);
   const openedAt = useRef(Date.now());
   const {
     register,
