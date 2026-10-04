@@ -68,24 +68,47 @@ export function ContactForm() {
     }
   };
 
-  if (sent) {
+  if (sent && sentValues) {
+    const waNumber = CONTACTS[0].phone;
+    const waText = [
+      `Hello Uthandolwamandla, my name is ${sentValues.name}.`,
+      sentValues.service ? `This is about ${sentValues.service}.` : "",
+      sentValues.message,
+      `(You can also reach me at ${sentValues.contact}.)`,
+    ]
+      .filter(Boolean)
+      .join(" ");
     return (
       <div className="border border-border p-8" role="status">
         <p className="display text-2xl">Thank you — it's with us.</p>
         <p className="mt-3 text-sm text-muted-foreground">
-          Your message is held in confidence and one of our team will respond shortly. If it's
-          urgent, please call or WhatsApp us.
+          Your message is held in confidence and one of our team will respond shortly. To reach
+          Zanele directly right now, continue on WhatsApp — your message is already typed in.
         </p>
-        <button
-          type="button"
-          onClick={() => {
-            setSent(false);
-            openedAt.current = Date.now();
-          }}
-          className="micro mt-8 min-h-11 text-muted-foreground hover:text-foreground"
-        >
-          Send another
-        </button>
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          <a
+            href={whatsappLink(waNumber, waText)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex min-h-11 items-center gap-3 rounded-full border border-primary bg-primary/10 px-6 py-3 text-sm transition-colors hover:bg-primary/20"
+          >
+            Continue on WhatsApp
+            <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1">
+              →
+            </span>
+          </a>
+          <button
+            type="button"
+            onClick={() => {
+              setSent(false);
+              setSentValues(null);
+              openedAt.current = Date.now();
+            }}
+            className="micro min-h-11 text-muted-foreground hover:text-foreground"
+          >
+            Send another
+          </button>
+        </div>
       </div>
     );
   }
