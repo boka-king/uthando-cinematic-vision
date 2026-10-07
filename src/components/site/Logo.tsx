@@ -30,7 +30,7 @@ function FallbackEmblem({ className }: { className?: string }) {
 export function LogoMark({ className }: { className?: string }) {
   const [failed, setFailed] = useState(false);
 
-  if (failed) return <FallbackEmblem className={className} />;
+  if (failed) return <FallbackEmblem className={className ?? undefined} />;
 
   return (
     <img
