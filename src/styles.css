@@ -25,6 +25,7 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-glow: var(--primary-glow);
+  --color-logo-surface: var(--logo-surface);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -43,6 +44,7 @@
 
 :root {
   --radius: 0.25rem;
+  --logo-surface: oklch(0.975 0.006 300);
   /* Light cinematic: warm paper canvas, same violet light source */
   --background: oklch(0.975 0.006 300);
   --foreground: oklch(0.19 0.024 300);
