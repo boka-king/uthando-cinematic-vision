@@ -94,7 +94,7 @@ export function HeroField() {
             alt="Uthandolwamandla Managing and Distribution (Pty) Ltd logo"
             width={1000}
             height={760}
-            className="block h-auto w-72 max-w-full object-contain sm:w-96"
+            className="block h-auto w-72 max-w-full rounded-sm object-contain dark:bg-logo-surface dark:p-3 sm:w-96"
             fetchPriority="high"
           />
         </div>
