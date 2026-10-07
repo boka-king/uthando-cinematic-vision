@@ -30,27 +30,33 @@ function FallbackEmblem({ className }: { className?: string | undefined }) {
   );
 }
 
-function useLogoFailed() {
-  const [failed, setFailed] = useState(false);
+function useLogoFailed(sources: string[]) {
+  const [index, setIndex] = useState(0);
+  const failed = index >= sources.length;
 
-  const ref = useCallback((node: HTMLImageElement | null) => {
-    if (node && node.complete && node.naturalWidth === 0) setFailed(true);
-  }, []);
+  const onError = useCallback(() => setIndex((i) => i + 1), []);
 
-  const onError = useCallback(() => setFailed(true), []);
+  const ref = useCallback(
+    (node: HTMLImageElement | null) => {
+      // Only treat as failed once loading finished with no pixels.
+      if (node && node.complete && node.currentSrc && node.naturalWidth === 0) onError();
+    },
+    [onError],
+  );
 
-  return { failed, ref, onError };
+  return { failed, ref, onError, src: sources[index] ?? "" };
 }
 
 export function LogoMark({ className }: { className?: string }) {
-  const { failed, ref, onError } = useLogoFailed();
+  const { failed, ref, onError, src } = useLogoFailed(["/brand/logo-mark.webp", markAsset.url]);
 
   if (failed) return <FallbackEmblem className={className} />;
 
   return (
     <img
       ref={ref}
-      src={markAsset.url}
+      key={src}
+      src={src}
       alt="Uthandolwamandla emblem"
       width={44}
       height={38}
@@ -67,7 +73,7 @@ export function LogoLockup({
   className?: string;
   imgClassName?: string;
 }) {
-  const { failed, ref, onError } = useLogoFailed();
+  const { failed, ref, onError, src } = useLogoFailed(["/brand/logo-lockup.webp", lockupAsset.url]);
 
   if (failed) {
     return (
@@ -86,10 +92,11 @@ export function LogoLockup({
   return (
     <img
       ref={ref}
-      src={lockupAsset.url}
+      key={src}
+      src={src}
       alt="Uthandolwamandla Managing and Distribution (Pty) Ltd logo"
       width={1000}
-      height={760}
+      height={772}
       onError={onError}
       fetchPriority="high"
       className={imgClassName}
