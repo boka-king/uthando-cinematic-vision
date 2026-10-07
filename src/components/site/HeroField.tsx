@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import logoAsset from "@/assets/logo-lockup.png.asset.json";
+import { LogoLockup } from "./Logo";
 
 /**
  * Subtle 3D opening field: layered violet light with pointer parallax and a
@@ -89,14 +89,7 @@ export function HeroField() {
             aria-hidden="true"
             className="absolute inset-0 -z-10 scale-150 rounded-full bg-primary/25 blur-3xl"
           />
-          <img
-            src={logoAsset.url}
-            alt="Uthandolwamandla Managing and Distribution (Pty) Ltd logo"
-            width={1000}
-            height={760}
-            className="block h-auto w-72 max-w-full rounded-sm object-contain dark:bg-logo-surface dark:p-3 sm:w-96"
-            fetchPriority="high"
-          />
+          <LogoLockup imgClassName="block h-auto w-72 max-w-full rounded-sm object-contain dark:bg-logo-surface dark:p-3 sm:w-96" />
         </div>
 
         <div
