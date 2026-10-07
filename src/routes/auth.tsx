@@ -7,7 +7,10 @@ export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "Staff sign in — Uthandolwamandla" },
-      { name: "description", content: "Private staff sign-in for the Uthandolwamandla enquiry inbox." },
+      {
+        name: "description",
+        content: "Private staff sign-in for the Uthandolwamandla enquiry inbox.",
+      },
       { property: "og:title", content: "Staff sign in — Uthandolwamandla" },
       { property: "og:description", content: "Private staff sign-in for the enquiry inbox." },
       { property: "og:type", content: "website" },
@@ -63,22 +66,46 @@ function AuthPage() {
           </h1>
         </div>
         <div>
-          <label htmlFor="email" className="micro text-muted-foreground">Email</label>
-          <input id="email" type="email" required autoComplete="email" className={field}
-            value={email} onChange={(e) => setEmail(e.target.value)} />
+          <label htmlFor="email" className="micro text-muted-foreground">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            required
+            autoComplete="email"
+            className={field}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div>
-          <label htmlFor="password" className="micro text-muted-foreground">Password</label>
-          <input id="password" type="password" required minLength={8}
-            autoComplete={mode === "in" ? "current-password" : "new-password"} className={field}
-            value={password} onChange={(e) => setPassword(e.target.value)} />
+          <label htmlFor="password" className="micro text-muted-foreground">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            required
+            minLength={8}
+            autoComplete={mode === "in" ? "current-password" : "new-password"}
+            className={field}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
-        <button type="submit" disabled={busy}
-          className="inline-flex min-h-11 items-center rounded-full border border-border px-6 text-sm transition-colors hover:border-primary hover:bg-primary/10 disabled:opacity-50">
+        <button
+          type="submit"
+          disabled={busy}
+          className="inline-flex min-h-11 items-center rounded-full border border-border px-6 text-sm transition-colors hover:border-primary hover:bg-primary/10 disabled:opacity-50"
+        >
           {busy ? "Please wait…" : mode === "in" ? "Sign in" : "Create account"}
         </button>
-        <button type="button" onClick={() => setMode(mode === "in" ? "up" : "in")}
-          className="micro block min-h-11 text-muted-foreground hover:text-foreground">
+        <button
+          type="button"
+          onClick={() => setMode(mode === "in" ? "up" : "in")}
+          className="micro block min-h-11 text-muted-foreground hover:text-foreground"
+        >
           {mode === "in" ? "First time? Create your account" : "Already have an account? Sign in"}
         </button>
       </form>

@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { EMAIL } from "@/lib/site";
 import { ThemeToggle } from "./ThemeToggle";
 
-
 type NavLink = {
   to: "/" | "/conversation" | "/privacy" | "/terms";
   label: string;
@@ -95,7 +94,6 @@ export function Navigation() {
             </span>
           </button>
         </div>
-
       </header>
 
       <div

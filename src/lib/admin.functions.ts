@@ -69,7 +69,10 @@ export const updateEnquiry = createServerFn({ method: "POST" })
     };
     if (data.status) patch.status = data.status;
     if (data.notes !== undefined) patch.notes = data.notes;
-    const { error } = await context.supabase.from("contact_requests").update(patch).eq("id", data.id);
+    const { error } = await context.supabase
+      .from("contact_requests")
+      .update(patch)
+      .eq("id", data.id);
     if (error) {
       console.error("update enquiry failed", error);
       throw new Error("Couldn't save that change.");
