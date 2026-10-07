@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import markAsset from "@/assets/logo-mark.png.asset.json";
+import { LogoMark } from "./Logo";
 import { cn } from "@/lib/utils";
 import { EMAIL } from "@/lib/site";
 import { ThemeToggle } from "./ThemeToggle";
@@ -59,13 +59,7 @@ export function Navigation() {
           className="flex items-center gap-3 rounded-sm"
           aria-label="Uthandolwamandla — home"
         >
-          <img
-            src={markAsset.url}
-            alt="Uthandolwamandla emblem"
-            width={44}
-            height={38}
-            className="h-auto w-11 shrink-0 object-contain"
-          />
+          <LogoMark className="shrink-0" />
           <span className="micro hidden text-muted-foreground sm:inline">Uthandolwamandla</span>
         </Link>
 
