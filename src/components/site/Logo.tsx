@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 const FALLBACK_SIZE = "min-h-11 min-w-11";
 
-function FallbackEmblem({ className }: { className?: string }) {
+function FallbackEmblem({ className }: { className?: string | undefined }) {
   return (
     <span
       role="img"
@@ -30,7 +30,7 @@ function FallbackEmblem({ className }: { className?: string }) {
 export function LogoMark({ className }: { className?: string }) {
   const [failed, setFailed] = useState(false);
 
-  if (failed) return <FallbackEmblem className={className ?? undefined} />;
+  if (failed) return <FallbackEmblem className={className} />;
 
   return (
     <img
