@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import markAsset from "@/assets/logo-mark.png.asset.json";
+import logoAsset from "@/assets/logo-lockup.png.asset.json";
 
 /**
  * Subtle 3D opening field: layered violet light with pointer parallax and a
@@ -79,7 +79,7 @@ export function HeroField() {
         }}
       >
         <div
-          className="mark-in relative"
+          className="relative shrink-0"
           style={{
             transform: `rotateX(${tilt.y * -6}deg) rotateY(${tilt.x * 8}deg) translateZ(0)`,
             transition: "transform 900ms cubic-bezier(0.16,1,0.3,1)",
@@ -90,11 +90,11 @@ export function HeroField() {
             className="absolute inset-0 -z-10 scale-150 rounded-full bg-primary/25 blur-3xl"
           />
           <img
-            src={markAsset.url}
-            alt="Uthandolwamandla emblem: two figures forming a heart around rising bars"
-            width={180}
-            height={180}
-            className="h-28 w-28 object-contain sm:h-44 sm:w-44"
+            src={logoAsset.url}
+            alt="Uthandolwamandla Managing and Distribution (Pty) Ltd logo"
+            width={1000}
+            height={760}
+            className="block h-auto w-72 max-w-full object-contain sm:w-96"
             fetchPriority="high"
           />
         </div>
@@ -107,9 +107,6 @@ export function HeroField() {
             transition: "transform 1200ms cubic-bezier(0.16,1,0.3,1)",
           }}
         >
-          <p className="micro text-muted-foreground">
-            Uthandolwamandla Managing and Distribution (Pty) Ltd
-          </p>
           <h1 className="display mx-auto max-w-3xl text-4xl text-balance sm:text-6xl md:text-7xl">
             People handled with care. Risk handled with precision.
           </h1>

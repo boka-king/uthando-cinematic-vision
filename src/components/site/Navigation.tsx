@@ -62,9 +62,9 @@ export function Navigation() {
           <img
             src={markAsset.url}
             alt="Uthandolwamandla emblem"
-            width={28}
-            height={28}
-            className="h-7 w-7 object-contain"
+            width={44}
+            height={38}
+            className="h-auto w-11 shrink-0 object-contain"
           />
           <span className="micro hidden text-muted-foreground sm:inline">Uthandolwamandla</span>
         </Link>
