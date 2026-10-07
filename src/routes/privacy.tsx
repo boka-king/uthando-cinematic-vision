@@ -73,8 +73,8 @@ function PrivacyPage() {
           <h2 className="display text-xl text-foreground">Security</h2>
           <p className="mt-3">
             The site is served over HTTPS and information is transmitted encrypted. We apply
-            reasonable technical and organisational measures to protect personal information
-            against loss, unauthorised access and disclosure.
+            reasonable technical and organisational measures to protect personal information against
+            loss, unauthorised access and disclosure.
           </p>
         </section>
         <section>
@@ -93,8 +93,8 @@ function PrivacyPage() {
           <h2 className="display text-xl text-foreground">Cookies and analytics</h2>
           <p className="mt-3">
             This site sets no advertising cookies. If website analytics are enabled in future, they
-            will be used only to understand aggregate visits, and this policy will be updated
-            before that happens.
+            will be used only to understand aggregate visits, and this policy will be updated before
+            that happens.
           </p>
         </section>
         <section>

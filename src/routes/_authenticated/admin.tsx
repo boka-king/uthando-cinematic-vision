@@ -54,7 +54,12 @@ function AdminPage() {
     navigate({ to: "/auth" });
   };
 
-  if (status.isLoading) return <Shell><p className="text-sm text-muted-foreground">Checking access…</p></Shell>;
+  if (status.isLoading)
+    return (
+      <Shell>
+        <p className="text-sm text-muted-foreground">Checking access…</p>
+      </Shell>
+    );
   if (!status.data?.isAdmin)
     return (
       <Shell onSignOut={signOut}>
@@ -69,10 +74,16 @@ function AdminPage() {
     <Shell onSignOut={signOut}>
       <div className="flex flex-wrap gap-2">
         {(["all", ...STATUSES] as const).map((s) => {
-          const count = s === "all" ? list.data?.length ?? 0 : (list.data ?? []).filter((r) => r.status === s).length;
+          const count =
+            s === "all"
+              ? (list.data?.length ?? 0)
+              : (list.data ?? []).filter((r) => r.status === s).length;
           return (
-            <button key={s} onClick={() => setFilter(s)}
-              className={`min-h-11 rounded-full border px-4 text-xs transition-colors ${filter === s ? "border-primary bg-primary/10 text-foreground" : "border-border text-muted-foreground hover:text-foreground"}`}>
+            <button
+              key={s}
+              onClick={() => setFilter(s)}
+              className={`min-h-11 rounded-full border px-4 text-xs transition-colors ${filter === s ? "border-primary bg-primary/10 text-foreground" : "border-border text-muted-foreground hover:text-foreground"}`}
+            >
               {s === "all" ? "All" : LABEL[s]} · {count}
             </button>
           );
@@ -87,7 +98,12 @@ function AdminPage() {
 
       <ul className="mt-10 divide-y divide-border border-y border-border">
         {rows.map((r) => (
-          <EnquiryRow key={r.id} row={r} open={openId === r.id} onToggle={() => setOpenId(openId === r.id ? null : r.id)} />
+          <EnquiryRow
+            key={r.id}
+            row={r}
+            open={openId === r.id}
+            onToggle={() => setOpenId(openId === r.id ? null : r.id)}
+          />
         ))}
       </ul>
     </Shell>
@@ -104,7 +120,10 @@ function Shell({ children, onSignOut }: { children: React.ReactNode; onSignOut?:
             <h1 className="display mt-6 text-4xl sm:text-5xl">Enquiry inbox</h1>
           </div>
           {onSignOut && (
-            <button onClick={onSignOut} className="micro min-h-11 text-muted-foreground hover:text-foreground">
+            <button
+              onClick={onSignOut}
+              className="micro min-h-11 text-muted-foreground hover:text-foreground"
+            >
               Sign out
             </button>
           )}
@@ -115,7 +134,15 @@ function Shell({ children, onSignOut }: { children: React.ReactNode; onSignOut?:
   );
 }
 
-function EnquiryRow({ row, open, onToggle }: { row: Enquiry; open: boolean; onToggle: () => void }) {
+function EnquiryRow({
+  row,
+  open,
+  onToggle,
+}: {
+  row: Enquiry;
+  open: boolean;
+  onToggle: () => void;
+}) {
   const qc = useQueryClient();
   const updateFn = useServerFn(updateEnquiry);
   const [notes, setNotes] = useState(row.notes ?? "");
@@ -133,43 +160,68 @@ function EnquiryRow({ row, open, onToggle }: { row: Enquiry; open: boolean; onTo
 
   const isEmail = row.contact.includes("@");
   const phone = row.contact.replace(/[^\d+]/g, "").replace(/^0/, "+27");
-  const date = new Date(row.created_at).toLocaleString("en-ZA", { dateStyle: "medium", timeStyle: "short" });
+  const date = new Date(row.created_at).toLocaleString("en-ZA", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
   const subject = `Re: your enquiry to Uthandolwamandla${row.service ? ` — ${row.service}` : ""}`;
 
   return (
     <li>
-      <button onClick={onToggle} aria-expanded={open}
-        className="grid w-full grid-cols-[1fr_auto] gap-4 py-5 text-left sm:grid-cols-[1.2fr_1fr_auto_auto]">
+      <button
+        onClick={onToggle}
+        aria-expanded={open}
+        className="grid w-full grid-cols-[1fr_auto] gap-4 py-5 text-left sm:grid-cols-[1.2fr_1fr_auto_auto]"
+      >
         <span>
           <span className="block text-sm text-foreground">{row.name}</span>
           <span className="block text-xs text-muted-foreground">{row.contact}</span>
         </span>
-        <span className="hidden truncate text-xs text-muted-foreground sm:block">{row.service ?? "General"}</span>
+        <span className="hidden truncate text-xs text-muted-foreground sm:block">
+          {row.service ?? "General"}
+        </span>
         <span className="hidden text-xs text-muted-foreground sm:block">{date}</span>
-        <span className={`micro self-center rounded-full border px-3 py-1 ${row.status === "new" ? "border-primary text-foreground" : "border-border text-muted-foreground"}`}>
+        <span
+          className={`micro self-center rounded-full border px-3 py-1 ${row.status === "new" ? "border-primary text-foreground" : "border-border text-muted-foreground"}`}
+        >
           {LABEL[row.status as keyof typeof LABEL] ?? row.status}
         </span>
       </button>
 
       {open && (
         <div className="space-y-8 pb-8">
-          <p className="text-xs text-muted-foreground sm:hidden">{row.service ?? "General"} · {date}</p>
-          <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">{row.message}</p>
+          <p className="text-xs text-muted-foreground sm:hidden">
+            {row.service ?? "General"} · {date}
+          </p>
+          <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
+            {row.message}
+          </p>
 
           <div className="flex flex-wrap gap-3 text-sm">
             {isEmail ? (
-              <a href={`mailto:${row.contact}?subject=${encodeURIComponent(subject)}`}
-                className="inline-flex min-h-11 items-center rounded-full border border-border px-5 hover:border-primary">
+              <a
+                href={`mailto:${row.contact}?subject=${encodeURIComponent(subject)}`}
+                className="inline-flex min-h-11 items-center rounded-full border border-border px-5 hover:border-primary"
+              >
                 Reply by email
               </a>
             ) : (
               <>
-                <a href={`tel:${phone}`} className="inline-flex min-h-11 items-center rounded-full border border-border px-5 hover:border-primary">
+                <a
+                  href={`tel:${phone}`}
+                  className="inline-flex min-h-11 items-center rounded-full border border-border px-5 hover:border-primary"
+                >
                   Call
                 </a>
-                <a href={whatsappLink(phone, `Hello ${row.name}, this is Uthandolwamandla following up on your enquiry.`)}
-                  target="_blank" rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center rounded-full border border-border px-5 hover:border-primary">
+                <a
+                  href={whatsappLink(
+                    phone,
+                    `Hello ${row.name}, this is Uthandolwamandla following up on your enquiry.`,
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center rounded-full border border-border px-5 hover:border-primary"
+                >
                   WhatsApp
                 </a>
               </>
@@ -177,22 +229,43 @@ function EnquiryRow({ row, open, onToggle }: { row: Enquiry; open: boolean; onTo
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <label htmlFor={`status-${row.id}`} className="micro text-muted-foreground">Status</label>
-            <select id={`status-${row.id}`} value={row.status}
-              onChange={(e) => mutate.mutate({ status: e.target.value as (typeof STATUSES)[number] })}
-              className="min-h-11 rounded-full border border-border bg-transparent px-4 text-sm">
-              {STATUSES.map((s) => <option key={s} value={s}>{LABEL[s]}</option>)}
+            <label htmlFor={`status-${row.id}`} className="micro text-muted-foreground">
+              Status
+            </label>
+            <select
+              id={`status-${row.id}`}
+              value={row.status}
+              onChange={(e) =>
+                mutate.mutate({ status: e.target.value as (typeof STATUSES)[number] })
+              }
+              className="min-h-11 rounded-full border border-border bg-transparent px-4 text-sm"
+            >
+              {STATUSES.map((s) => (
+                <option key={s} value={s}>
+                  {LABEL[s]}
+                </option>
+              ))}
             </select>
           </div>
 
           <div>
-            <label htmlFor={`notes-${row.id}`} className="micro text-muted-foreground">Private follow-up notes</label>
-            <textarea id={`notes-${row.id}`} rows={3} value={notes} maxLength={5000}
+            <label htmlFor={`notes-${row.id}`} className="micro text-muted-foreground">
+              Private follow-up notes
+            </label>
+            <textarea
+              id={`notes-${row.id}`}
+              rows={3}
+              value={notes}
+              maxLength={5000}
               onChange={(e) => setNotes(e.target.value)}
               className="mt-2 w-full resize-none border-b border-input bg-transparent py-3 text-sm focus:border-primary focus:outline-none"
-              placeholder="Called back on Tuesday, sending proposal…" />
-            <button onClick={() => mutate.mutate({ notes })} disabled={mutate.isPending || notes === (row.notes ?? "")}
-              className="mt-3 inline-flex min-h-11 items-center rounded-full border border-border px-5 text-sm hover:border-primary disabled:opacity-50">
+              placeholder="Called back on Tuesday, sending proposal…"
+            />
+            <button
+              onClick={() => mutate.mutate({ notes })}
+              disabled={mutate.isPending || notes === (row.notes ?? "")}
+              className="mt-3 inline-flex min-h-11 items-center rounded-full border border-border px-5 text-sm hover:border-primary disabled:opacity-50"
+            >
               Save notes
             </button>
           </div>

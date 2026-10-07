@@ -114,8 +114,8 @@ export function HeroField() {
             People handled with care. Risk handled with precision.
           </h1>
           <p className="mx-auto max-w-md text-sm leading-relaxed text-muted-foreground">
-            A South African human resources practice for employers who would rather get it right
-            the first time — quietly, and in confidence.
+            A South African human resources practice for employers who would rather get it right the
+            first time — quietly, and in confidence.
           </p>
         </div>
 

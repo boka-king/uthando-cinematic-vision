@@ -19,11 +19,11 @@ export function FounderPassage() {
         </Reveal>
         <Reveal delay={300}>
           <p className="mt-10 max-w-xl text-sm leading-loose text-muted-foreground">
-            Uthandolwamandla was founded by Zanele Mabuza on a simple conviction: an employer and
-            an employee are both better served when the process between them is fair, documented
-            and handled by someone who knows the law. That conviction is the mission of the firm —
-            to empower people and build stronger futures — and it runs through every placement,
-            every hearing and every payroll run we take on.
+            Uthandolwamandla was founded by Zanele Mabuza on a simple conviction: an employer and an
+            employee are both better served when the process between them is fair, documented and
+            handled by someone who knows the law. That conviction is the mission of the firm — to
+            empower people and build stronger futures — and it runs through every placement, every
+            hearing and every payroll run we take on.
           </p>
         </Reveal>
         <Reveal delay={420}>
