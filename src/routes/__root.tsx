@@ -124,7 +124,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
-const themeScript = `try{var t=localStorage.getItem("uth-theme");if(t==="dark"){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}}catch(e){}`;
+const themeScript = `try{var t=localStorage.getItem("uth-theme");if(t!=="light"){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}}catch(e){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}`;
 
 function RootShell({ children }: { children: ReactNode }) {
   return (

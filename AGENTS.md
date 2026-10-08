@@ -11,3 +11,4 @@
 
 - Display the supplied full logo lockup in the home opening and the compact emblem in navigation; keep the main logo visible without delayed blur so the brand is immediately recognizable.
 - Render logos only through `src/components/site/Logo.tsx` (`LogoMark`, `LogoLockup`) so the inline fallback mark engages on load failure; its mount-time `complete && naturalWidth === 0` check is required because image errors can fire before React hydrates.
+- Load optional hero depth dynamically after hydration only on visible, motion-enabled desktop dark views; keep the logo and copy in HTML so small screens and WebGL failures retain the complete opening.

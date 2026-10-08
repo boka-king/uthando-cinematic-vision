@@ -3,12 +3,13 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { SERVICES } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export function PracticeIndex() {
   const [active, setActive] = useState<string | null>(SERVICES[0].id);
 
   return (
-    <section id="practice" className="scroll-mt-24 px-6 py-32 sm:px-12 sm:py-48">
+    <section id="practice" className="scroll-mt-24 px-6 pt-5 pb-32 sm:px-12 sm:pb-48">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <p className="micro text-muted-foreground">What we carry for you</p>
@@ -25,20 +26,21 @@ export function PracticeIndex() {
                 onMouseEnter={() => setActive(service.id)}
               >
                 <Reveal delay={i * 90}>
-                  <button
+                  <Button variant="ghost"
                     type="button"
                     aria-expanded={open}
                     aria-controls={`${service.id}-detail`}
                     onClick={() => setActive(open ? null : service.id)}
+                    onFocus={() => setActive(service.id)}
                     className={cn(
-                      "group flex w-full items-baseline gap-5 py-7 text-left transition-opacity duration-700 sm:gap-10",
+                      "group flex h-auto w-full items-baseline gap-5 rounded-none px-0 py-7 text-left whitespace-normal font-normal transition-opacity duration-700 hover:bg-transparent sm:gap-10",
                       active && !open ? "opacity-45 hover:opacity-100" : "opacity-100",
                     )}
                   >
                     <span className="micro w-6 shrink-0 text-primary">{service.index}</span>
                     <span className="flex-1">
-                      <span className="display block text-2xl sm:text-4xl">{service.title}</span>
-                      <span className="mt-2 block text-sm text-muted-foreground">
+                      <span className="display block text-xl sm:text-2xl">{service.title}</span>
+                      <span className="mt-2 block text-xs text-muted-foreground">
                         {service.lead}
                       </span>
                     </span>
@@ -51,7 +53,7 @@ export function PracticeIndex() {
                     >
                       →
                     </span>
-                  </button>
+                  </Button>
 
                   <div
                     id={`${service.id}-detail`}
