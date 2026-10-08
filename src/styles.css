@@ -209,6 +209,6 @@
 }
 
 .cinematic-opening { min-height: calc(100svh - 72px); perspective: 1200px; }
-.hero-depth { opacity: 0.55; mask-image: linear-gradient(transparent, var(--foreground) 20%, var(--foreground) 65%, transparent); }
-.dark .hero-logo { filter: drop-shadow(0 4px 18px color-mix(in oklab, var(--primary) 12%, transparent)); }
+.hero-depth { opacity: 0.3; mask-image: linear-gradient(transparent, var(--foreground) 20%, var(--foreground) 65%, transparent); }
+.dark .hero-logo { filter: brightness(1.55) drop-shadow(0 4px 18px color-mix(in oklab, var(--primary) 12%, transparent)); }
 @media (max-width: 767px) { .cinematic-opening { min-height: max(570px, calc(100svh - 64px)); } }

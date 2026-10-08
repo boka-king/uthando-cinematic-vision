@@ -11,9 +11,7 @@ export function PracticeIndex() {
   return (
     <section id="practice" className="scroll-mt-24 px-6 pt-5 pb-32 sm:px-12 sm:pb-48">
       <div className="mx-auto max-w-5xl">
-        <Reveal>
           <p className="micro text-muted-foreground">What we carry for you</p>
-        </Reveal>
 
         <ul className="mt-16 divide-y divide-border border-y border-border">
           {SERVICES.map((service, i) => {
