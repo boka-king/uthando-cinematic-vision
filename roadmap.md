@@ -1,5 +1,7 @@
 # Uthandolwamandla site — roadmap
 
+- [x] Dark cinematic opening, transparent logo, restrained 3D depth and progressive navigation verification
+
 - [x] Design system, logo/favicon assets
 - [x] Navigation, footer, reveal system
 - [x] Home (hero, practice index, founder, CTA)

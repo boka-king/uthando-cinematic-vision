@@ -138,14 +138,14 @@
 @utility micro {
   font-size: 0.6875rem;
   line-height: 1.2;
-  letter-spacing: 0.22em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
 @utility display {
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: -0.015em;
+  letter-spacing: 0;
   line-height: 1.02;
 }
 
@@ -196,16 +196,19 @@
 @keyframes mark-in {
   from {
     opacity: 0;
-    transform: translateY(14px) scale(0.94);
-    filter: blur(10px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
     transform: none;
-    filter: blur(0);
   }
 }
 
 @utility mark-in {
   animation: mark-in 2.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+.cinematic-opening { min-height: calc(100svh - 72px); perspective: 1200px; }
+.hero-depth { opacity: 0.3; mask-image: linear-gradient(transparent, var(--foreground) 20%, var(--foreground) 65%, transparent); }
+.dark .hero-logo { filter: brightness(1.55) drop-shadow(0 4px 18px color-mix(in oklab, var(--primary) 12%, transparent)); }
+@media (max-width: 767px) { .cinematic-opening { min-height: max(570px, calc(100svh - 64px)); } }

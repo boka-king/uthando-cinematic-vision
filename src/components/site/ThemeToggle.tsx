@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type Theme = "light" | "dark";
 
@@ -11,11 +12,12 @@ function apply(theme: Theme) {
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(THEME_KEY);
-    const initial: Theme = stored === "dark" || stored === "light" ? stored : "light";
+    let stored: string | null = null;
+    try { stored = window.localStorage.getItem(THEME_KEY); } catch { /* Respect blocked storage. */ }
+    const initial: Theme = stored === "light" ? "light" : "dark";
     setTheme(initial);
     apply(initial);
   }, []);
@@ -32,7 +34,7 @@ export function ThemeToggle() {
   };
 
   return (
-    <button
+    <Button variant="ghost" size="icon"
       type="button"
       onClick={toggle}
       aria-label={theme === "dark" ? "Switch to light view" : "Switch to dark view"}
@@ -43,6 +45,6 @@ export function ThemeToggle() {
       ) : (
         <Moon aria-hidden="true" className="size-4" />
       )}
-    </button>
+    </Button>
   );
 }

@@ -1,15 +1,39 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { Component, lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { LogoLockup } from "./Logo";
 
+const HeroDepth = lazy(() => import("./HeroDepth"));
+
+class DepthBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  override state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  override render() { return this.state.failed ? null : this.props.children; }
+}
+
 /**
- * Subtle 3D opening field: layered violet light with pointer parallax and a
- * slow settle on scroll. CSS transforms only — no 3D library, no heavy assets.
+ * Readable logo-first opening with optional, client-only desktop 3D depth.
  */
 export function HeroField() {
   const sceneRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [scrolled, setScrolled] = useState(0);
+  const [depth, setDepth] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+    let visible = true;
+    const update = () => setDepth(media.matches && visible && !document.hidden && document.documentElement.classList.contains("dark"));
+    const observer = new IntersectionObserver(([entry]) => { visible = entry?.isIntersecting ?? false; update(); });
+    if (sceneRef.current) observer.observe(sceneRef.current);
+    const themeObserver = new MutationObserver(update);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    media.addEventListener("change", update);
+    document.addEventListener("visibilitychange", update);
+    update();
+    return () => { observer.disconnect(); themeObserver.disconnect(); media.removeEventListener("change", update); document.removeEventListener("visibilitychange", update); };
+  }, []);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -41,90 +65,58 @@ export function HeroField() {
 
   return (
     <section
-      className="relative flex min-h-dvh flex-col justify-between overflow-hidden px-6 pt-32 pb-12 sm:px-12"
-      style={{ perspective: "1200px" }}
+      ref={sceneRef}
+      className="cinematic-opening relative flex flex-col justify-between overflow-hidden px-6 pt-28 pb-8 sm:px-12"
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 aurora drift" />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_40rem_at_50%_120%,transparent,var(--color-background))]"
-      />
-      {/* Depth rings: three faint planes offset by pointer tilt. Hidden on
-          small screens, where the composition stays flat and light. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden items-center justify-center sm:flex"
-      >
-        {[0, 1, 2].map((ring) => (
-          <div
-            key={ring}
-            className="absolute rounded-full border border-border/40"
-            style={{
-              width: `${26 + ring * 16}rem`,
-              height: `${26 + ring * 16}rem`,
-              opacity: 0.5 - ring * 0.14,
-              transform: `translate3d(${tilt.x * (10 + ring * 8)}px, ${tilt.y * (8 + ring * 6)}px, 0)`,
-              transition: "transform 1400ms cubic-bezier(0.16,1,0.3,1)",
-            }}
-          />
-        ))}
-      </div>
+      {depth && <div aria-hidden="true" className="hero-depth absolute inset-0"><DepthBoundary><Suspense fallback={null}><HeroDepth /></Suspense></DepthBoundary></div>}
 
       <div
-        ref={sceneRef}
-        className="relative mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-10 text-center"
+        className="relative mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-7 text-center"
         style={{
           transform: `translateY(${scrolled * -40}px)`,
           opacity: 1 - scrolled * 0.6,
         }}
       >
         <div
-          className="relative shrink-0"
+          className="relative max-w-full shrink-0"
           style={{
             transform: `rotateX(${tilt.y * -6}deg) rotateY(${tilt.x * 8}deg) translateZ(0)`,
             transition: "transform 900ms cubic-bezier(0.16,1,0.3,1)",
           }}
         >
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 -z-10 scale-150 rounded-full bg-primary/25 blur-3xl"
-          />
-          <LogoLockup imgClassName="block h-auto w-72 max-w-full rounded-sm object-contain dark:bg-logo-surface dark:p-3 sm:w-96" />
+          <LogoLockup imgClassName="hero-logo block h-auto w-72 max-w-full object-contain sm:w-96" />
         </div>
 
         <div
-          className="mark-in space-y-6"
+          className="mark-in space-y-4"
           style={{
             animationDelay: "500ms",
             transform: `translate3d(${tilt.x * -8}px, ${tilt.y * -6}px, 0)`,
             transition: "transform 1200ms cubic-bezier(0.16,1,0.3,1)",
           }}
         >
-          <h1 className="display mx-auto max-w-3xl text-4xl text-balance sm:text-6xl md:text-7xl">
+          <h1 className="sr-only">Uthandolwamandla Managing and Distribution (Pty) Ltd</h1>
+          <p className="mx-auto max-w-sm text-base leading-relaxed text-balance sm:text-lg">
             People handled with care. Risk handled with precision.
-          </h1>
-          <p className="mx-auto max-w-md text-sm leading-relaxed text-muted-foreground">
+          </p>
+          <p className="mx-auto max-w-sm text-xs leading-relaxed text-muted-foreground">
             A South African human resources practice for employers who would rather get it right
             the first time — quietly, and in confidence.
           </p>
         </div>
 
+        <Button asChild variant="ghost" className="mark-in group mt-1 h-auto min-h-11 rounded-none px-2 py-3 text-xs font-normal text-muted-foreground hover:bg-transparent hover:text-foreground">
         <Link
           to="/conversation"
-          className="mark-in group inline-flex min-h-11 items-center gap-3 rounded-full border border-border px-6 py-3 text-sm text-foreground transition-colors hover:border-primary hover:bg-primary/10"
           style={{ animationDelay: "900ms" }}
         >
           Start a confidential conversation
-          <span
-            aria-hidden="true"
-            className="transition-transform duration-500 group-hover:translate-x-1"
-          >
-            →
-          </span>
+          <ArrowUpRight aria-hidden="true" className="transition-transform duration-700 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </Link>
+        </Button>
       </div>
 
-      <p className="micro relative mx-auto text-muted-foreground/70">Scroll to explore</p>
+      <Button asChild variant="ghost" size="icon" className="relative mx-auto mt-6 text-muted-foreground hover:bg-transparent hover:text-foreground"><a href="#practice" aria-label="Explore our practice"><ArrowDown aria-hidden="true" /></a></Button>
     </section>
   );
 }

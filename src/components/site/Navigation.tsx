@@ -1,5 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { LogoMark } from "./Logo";
 import { cn } from "@/lib/utils";
 import { EMAIL } from "@/lib/site";
@@ -24,6 +25,8 @@ const LINKS: NavLink[] = [
 export function Navigation() {
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => setOpen(false), [pathname]);
@@ -43,6 +46,27 @@ export function Navigation() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const panel = panelRef.current;
+    panel?.querySelector<HTMLElement>("a")?.focus();
+    const main = document.getElementById("main");
+    const footer = document.querySelector("footer");
+    if (main) main.inert = true;
+    if (footer) footer.inert = true;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { event.preventDefault(); setOpen(false); return; }
+      if (event.key !== "Tab") return;
+      const items = [triggerRef.current, ...Array.from(panel?.querySelectorAll<HTMLElement>("a") ?? [])].filter((item): item is HTMLElement => item !== null);
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => { document.removeEventListener("keydown", onKey); if (main) main.inert = false; if (footer) footer.inert = false; triggerRef.current?.focus(); };
   }, [open]);
 
   return (
@@ -65,7 +89,7 @@ export function Navigation() {
 
         <div className="flex items-center gap-1 sm:gap-3">
           <ThemeToggle />
-          <button
+          <Button variant="ghost" ref={triggerRef}
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
@@ -87,13 +111,14 @@ export function Navigation() {
                 )}
               />
             </span>
-          </button>
+          </Button>
         </div>
 
       </header>
 
       <div
         id="site-index"
+        ref={panelRef}
         hidden={!open}
         className="fixed inset-0 z-30 flex flex-col justify-center bg-background/95 px-6 backdrop-blur-xl sm:px-16"
       >
