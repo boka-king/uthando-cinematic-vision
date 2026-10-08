@@ -1,6 +1,6 @@
 # Uthandolwamandla site — roadmap
 
-- [ ] Dark cinematic opening, transparent logo, restrained 3D depth and progressive navigation verification
+- [x] Dark cinematic opening, transparent logo, restrained 3D depth and progressive navigation verification
 
 - [x] Design system, logo/favicon assets
 - [x] Navigation, footer, reveal system

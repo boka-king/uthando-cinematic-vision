@@ -32,7 +32,7 @@ export function PracticeIndex() {
                     onFocus={() => setActive(service.id)}
                     className={cn(
                       "group flex h-auto w-full items-baseline gap-5 rounded-none px-0 py-7 text-left whitespace-normal font-normal transition-opacity duration-700 hover:bg-transparent sm:gap-10",
-                      active && !open ? "opacity-45 hover:opacity-100" : "opacity-100",
+                      active && !open ? "opacity-85 hover:opacity-100" : "opacity-100",
                     )}
                   >
                     <span className="micro w-6 shrink-0 text-primary">{service.index}</span>

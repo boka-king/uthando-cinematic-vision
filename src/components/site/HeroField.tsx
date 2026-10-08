@@ -78,7 +78,7 @@ export function HeroField() {
         }}
       >
         <div
-          className="relative shrink-0"
+          className="relative max-w-full shrink-0"
           style={{
             transform: `rotateX(${tilt.y * -6}deg) rotateY(${tilt.x * 8}deg) translateZ(0)`,
             transition: "transform 900ms cubic-bezier(0.16,1,0.3,1)",
